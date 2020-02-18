@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Stop Program | Sign In</title>
+    <meta name="Description" content="" />
+    <meta name="Keywords" content="" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <!--Dev-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--Prod
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <main id="app">
+        <img
+          src="img/dLarrivee-logo.png"
+          alt="dLarrivee Logo"
+          class="logo"
+        />
+          <div class="form-container" v-if="step === 1">
+            <div class="item-1">
+              <div class="header">
+                <h1>Account: {{ account_name }}</h1>
+        </div>
+            </div>
+            <div class="item-1">
+              <div class="header margtp2em">
+                <h2>Choose a program:</h2>
+              </div>
+              <select
+                id=""
+                name=""
+                v-model="programInfo.prefProgram"
+                class="select-arrow"
+              >
+                <option value="" disabled selected>select one</option>
+                <template v-for="program in chooseProgram">
+                  <option>{{ program }}</option> 
+                </template>
+              </select>
+            </div>
+            <div class="item-1 margtp2em">
+              <input v-on:click="refreshPrograms" type="reset" value="Refresh Program List" class="btn-reset margtp1em" />
+            </div>
+            <div class="item-1">
+              <div class="header margtp2em">
+                <h2>Select one program option:</h2>
+              </div>
+              <div class="header margtp1em">
+                <label class="check-container"
+                  ><p>Keep current version and discard Draft</p>
+                  <input type="radio" name="radio" v-model="saveDraft" value="N"/>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <div class="header margtp2em">
+                <label class="check-container"
+                  ><p>Keep Draft and discard current version</p>
+                  <input type="radio" name="radio" v-model="saveDraft" value="Y"/>
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+            <div class="item-1 margtp2em">
+              <button @click.prevent="next()" class="btn-signin">
+                CONTINUE
+              </button>
+              <input type="reset" value="RESET" class="btn-reset margtp1em" />
+            </div>
+          </div>
+          <div class="form-container" v-if="step === 2">
+            <div class="item-1">
+              <div class="header">
+                <h2>Confirm program and update:</h2>
+                <p v-if="saveDraft == 'Y'" >Stop {{ programInfo.prefProgram }} and save current draft</p>
+                <p v-else>{{ programInfo.prefProgram }} and keep current program version</p>
+                <button @click.prevent="next(); stopProgram()" class="btn-yes margtp2em">
+                  YES, STOP THIS PROGRAM
+                </button>
+                <button @click.prevent="back()" class="btn-no margtp1em">
+                  NO, THIS IS NOT WHAT I WANT
+                </button>
+              </div>
+            </div>
+            <div class="item-1 margtp1em">
+              &nbsp;
+            </div>
+          </div>
+          <div class="form-container" v-if="step === 3">
+            <div class="item-1">
+              <div class="header">
+                <h2>{{ programInfo.prefProgram }} has been stopped</h2>
+                <p v-if="saveDraft == Y" >Stop {{ programInfo.prefProgram }} and save current draft</p>
+                <p v-else>{{ programInfo.prefProgram }} and keep current program version</p>
+                <button @click.prevent="next(); stopProgram()" class="btn-yes margtp2em">
+                  Stop another program
+                </button>
+                <button href="/logout" class="btn-no margtp1em">
+                  Logout
+                </button>
+              </div>
+            </div>
+            <div class="item-1 margtp1em">
+              &nbsp;
+            </div>
+          </div>
+      </main>
+      <footer>
+        <p>
+          &copy;2019 All rights reserved.<br />dLarrivee<br /><a href="/logout"
+            >logout</a
+          >
+        </p>
+      </footer>
+    </div>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: "#app",
+        data: {
+		account_name: "SS_Sandbox",
+		step: 1,
+		errors: [],
+		redBorderUser: false,
+		redBorderPassword: false,
+		programInfo: {
+      user: null,
+      password: null,
+      programName: null,
+      prefProgram: "",
+    },
+    saveDraft: "Y",
+    chooseProgram: []
+        }, created: function() {
+          var url = "/programsRefresh";
+            var this_app = this;
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: url,
+              cache: false,
+              success: function(data) {
+                console.log("post sucess");
+                console.log(data.programs);
+                var programNum = data.programs.length;
+                for (i=0; i < programNum; i++) {
+                  if (data.programs[i].status == 'RUNNING') {
+                    this_app.chooseProgram.push(data.programs[i].name)
+                    console.log('status')
+                    console.log(data.programs[i].status)
+                  }
+                }
+                //this_app.chooseProgram = data.programs;
+              }
+            });
+        },
+        methods: {
+          refreshPrograms: function() {
+            var url = "/programsRefresh";
+            var this_app = this;
+            this_app.chooseProgram = [];
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: url,
+              cache: false,
+              success: function(data) {
+                console.log("post sucess");
+                console.log(data.programs);
+                var programNum = data.programs.length;
+                for (i=0; i < programNum; i++) {
+                  if (data.programs[i].status == 'RUNNING') {
+                    this_app.chooseProgram.push(data.programs[i].name)
+                    console.log('status')
+                    console.log(data.programs[i].status)
+                  }
+                }
+                //this_app.chooseProgram = data.programs;
+              }
+            });
+          },
+          stopProgram: function() {
+            var url = "/stopProgram";
+            var this_app = this;
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              data: { programName: this.programInfo.prefProgram},
+              url: url,
+              cache: false,
+              success: function(data) {
+                console.log("post sucess");
+                console.log(data.programs);
+              }
+            });
+          },
+          addSuppTable: function() {
+            var url = "/supp_tables";
+            var this_app = this;
+            $.ajax({
+              type: "POST",
+              dataType: "json",
+              data: { name: "dylansSuppTable", json_in: "json string" },
+              url: url,
+              cache: false,
+              success: function(data) {
+                console.log("add supp table to database was a sucess");
+              }
+            });
+          },
+          checkForm: function(e) {
+            this.errors = [];
+            if (!this.programInfo.user) {
+              this.errors.push("* username is needed");
+              //var expr = /^([-!#-'*/-9=?A-Z^-~]+(\.[-!#-'*/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@(([-!#-'*/-9=?A-Z^-~]{1,})+(\.(([-!#-'*/-9=?A-Z^-~]{2,}))+){1,})$/igm;
+              this.redBorderUser = true;
+            } else {
+              this.redBorderUser = false;
+            }
+
+            if (!this.programInfo.password) {
+              this.errors.push("* password needed");
+              this.redBorderPassword = true;
+            } else {
+              this.redBorderPassword = false;
+            }
+
+            if (!this.errors.length) return true;
+            e.preventDefault();
+          },
+          next() {
+            this.step++;
+          },
+          back() {
+            this.step--;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

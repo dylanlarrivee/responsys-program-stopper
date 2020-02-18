@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:v="urn:schemas-microsoft-com:vml"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
+<!--[if !mso]><!-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!--<![endif]-->
+<title>RI Program Stopper</title>
+
+<!--Dev-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!--Prod
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<main id="app" v-cloak>
+<div >
+  <h1 >Responsys Content Orchestration Manager</h1>
+  <h2>Manage that content</h2>
+</div>
+    <button v-on:click="refreshPrograms">Refresh Supp Table  List</button>
+    <br>
+    <button v-on:click="stopProgram">Stop Dylans program</button>
+    <br>
+    <button v-on:click="addSuppTable">Add table to the database</button>
+  <div>
+    <div >
+    <h3>Running programs:</h3>
+    <select>
+            <option v-for="program in programs" :value="program" v:model="selectedProgram">{{program.name}}</option>
+    </select>
+    <div v-for="program in programs">
+    <p>Name: {{program.name}}</p>
+    </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+</main>
+<script type="text/javascript">
+var app = new Vue({
+  el: '#app',  
+  data: {
+    programs: null,
+    programsLoaded: false,
+    selectedProgram: ""
+  },
+  computed: {
+},
+  methods:{
+    refreshPrograms: function() {    
+    var url = '/programsRefresh'    
+    var this_app = this;
+    $.ajax({
+          type: 'POST',
+          dataType: "json",
+          url: url,
+          cache: false,
+          success: function(data) {
+                console.log('post sucess')
+                console.log(data.programs)
+                this_app.programs = data.programs
+        }
+      })
+ },
+ stopProgram: function() {    
+    var url = '/stopProgram'    
+    var this_app = this;
+    $.ajax({
+          type: 'POST',
+          dataType: "json",
+          data: {programName: 'sampleDylanProgram'},
+          url: url,
+          cache: false,
+          success: function(data) {
+                console.log('post sucess')
+                console.log(data.programs)
+                this_app.programs = data.programs
+        }
+      })
+  },
+ addSuppTable: function() {    
+    var url = '/supp_tables'    
+    var this_app = this;
+    $.ajax({
+          type: 'POST',
+          dataType: "json",
+          data: {name: 'dylansSuppTable', json_in: 'json string'},
+          url: url,
+          cache: false,
+          success: function(data) {
+                console.log('add supp table to database was a sucess')
+        }
+      })
+  }
+},
+  mounted: function() { 
+ },
+  updated: function() { 
+ }
+});
+</script>
+</body>
+</html>
+
+
+
