@@ -8,7 +8,7 @@
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Stop Program | Sign In</title>
+    <title>RI Program Stopper</title>
     <meta name="Description" content="" />
     <meta name="Keywords" content="" />
     <link
@@ -111,7 +111,7 @@
                 <h2>{{ programInfo.prefProgram }} has been stopped</h2>
                 <p v-if="saveDraft == Y" >Stop {{ programInfo.prefProgram }} and save current draft</p>
                 <p v-else>{{ programInfo.prefProgram }} and keep current program version</p>
-                <button @click.prevent="next(); stopProgram()" class="btn-yes margtp2em">
+                <button @click.prevent="stopAnotherProgram()" class="btn-yes margtp2em">
                   Stop another program
                 </button>
                 <button href="/logout" class="btn-no margtp1em">
@@ -126,7 +126,7 @@
       </main>
       <footer>
         <p>
-          &copy;2019 All rights reserved.<br />dLarrivee<br /><a href="/logout"
+          &copy;2020 All rights reserved.<br />dLarrivee<br /><a href="/logout"
             >logout</a
           >
         </p>
@@ -211,6 +211,9 @@
                 console.log(data.programs);
               }
             });
+          },
+          stopAnotherProgram: function() {
+            this.step = 1;
           },
           addSuppTable: function() {
             var url = "/supp_tables";

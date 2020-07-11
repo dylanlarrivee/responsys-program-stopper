@@ -24,10 +24,11 @@
 					<input type="text" name="username" v-model="programInfo.user" placeholder="Username" :class="{'errorBorder': (redBorderUser)}" />
 				</div>
 				<div class="item-1">
-					<input type="text" name="password" v-model="programInfo.password" placeholder="Password" :class="{'errorBorder': (redBorderPassword)}" />
+					<input type="password" name="password" v-model="programInfo.password" placeholder="Password" :class="{'errorBorder': (redBorderPassword)}" />
 				</div>
 				<div class="item-1 error-container">
-					<p><a href="" class="forgot">Forgot password?</a></p>
+					<!-- Forgot password functionality needs to be set up server side. -->
+					<!-- <p><a href="" class="forgot">Forgot password?</a></p> -->
 					<ul>
 				      <li v-for="error in errors" class="error-message">{{ error }}</li>
 				    </ul>
@@ -40,7 +41,7 @@
 		
 	</main>  
 	<footer>
-	<p>&copy;2019 All rights reserved.<br />dLarrivee</p>
+	<p>&copy;2020 All rights reserved.<br />dLarrivee</p>
 	</footer>  
 </div>
 <script type="text/javascript">

@@ -1,4 +1,3 @@
-var riLogin = require('../config')
 
 var responsys = {
   authToken: null,
@@ -11,8 +10,8 @@ var authOptions = {
   method: "POST",
   uri: "https://login2.responsys.net/rest/api/v1.3/auth/token",
   form: {
-    user_name: riLogin.riUsername,
-    password: riLogin.riPassword,
+    user_name: process.env.riUsername,
+    password: process.env.riPassword,
     auth_type: "password"
   },
   headers: {
