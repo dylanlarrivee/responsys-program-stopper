@@ -15,7 +15,7 @@ const responsysApi = require('./controllers/responsysApi')
 var app = express();
 
 // set our application port
-app.set('port', 3000);
+app.set('port', process.env.PORT || 3000);
 
 // set morgan to log info about our requests for development use.
 app.use(morgan('dev'));
