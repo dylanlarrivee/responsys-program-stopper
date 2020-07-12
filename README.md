@@ -53,3 +53,13 @@ To see this live in action you can click [here](https://secret-oasis-02597.herok
     3. riPassword= password for your Responsys account.
 7. From the CLI, run `heroku open` to start your app.
 8. Navigate to the /signup route to create a new user.
+
+## Screen Shots
+
+## Login Screen
+
+![Login Screen](/public/img/ri_program_stopper_1?raw=true "Login Screen")
+
+## Main Menu
+
+![Main Menu](/public/img/ri_program_stopper_2?raw=true "Main Menu")
