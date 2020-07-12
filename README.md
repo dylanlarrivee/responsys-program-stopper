@@ -58,8 +58,8 @@ To see this live in action you can click [here](https://secret-oasis-02597.herok
 
 ## Login Screen
 
-![Login Screen](/public/img/ri_program_stopper_1?raw=true "Login Screen")
+![Login Screen](/public/img/ri_program_stopper_1.png?raw=true "Login Screen")
 
 ## Main Menu
 
-![Main Menu](/public/img/ri_program_stopper_2?raw=true "Main Menu")
+![Main Menu](/public/img/ri_program_stopper_2.png?raw=true "Main Menu")
