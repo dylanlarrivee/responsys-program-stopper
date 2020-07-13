@@ -1,4 +1,5 @@
-# Responsys Program Stopper
+# Responsys Program Stopper ![visitors](https://visitor-badge.glitch.me/badge?page_id=dylanlarrivee.responsys-program-stopper)
+
 A custom solution web app that can be used along side [Oracle Responsys](https://www.oracle.com/marketingcloud/products/cross-channel-orchestration/) marketing software to allow a digital marketer to stop cross channel orchestration programs from anywhere without the need to log into their Responsys account. 
 
 ## Technologies used:
@@ -6,7 +7,7 @@ Node.js, PostgreSQl, JavaScript, Vue.js and utilizes the
 Responsys API functionality.
 
 ## Purpose
-I built this web app as a proof of concept for a need that was brought up by one of my digital marketing clients. They wanted a way to be able to stop programs in Responsys 
+I built this web app as a proof of concept for a need that was brought up by one of my digital marketing clients. They wanted a way to be able to stop programs in Responsys.
 
 ## Note: 
 For the demo, I have the web app hardcoded to a test account and wont actually stop any of the programs so that the retrieve running program list functionality can continue working even when multiple people stop a program. When this is used live the settings can be changed to stop programs as expected.
