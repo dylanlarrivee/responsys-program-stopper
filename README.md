@@ -1,4 +1,4 @@
-# Responsys Program Stopper ![visitors](https://visitor-badge.glitch.me/badge?page_id=dylanlarrivee.responsys-program-stopper)
+# Responsys Program Stopper [![Visits Badge](https://badges.pufler.dev/visits/dylanlarrivee/responsys-program-stopper)](https://badges.pufler.dev)
 
 A custom solution web app that can be used along side [Oracle Responsys](https://www.oracle.com/marketingcloud/products/cross-channel-orchestration/) marketing software to allow a digital marketer to stop cross channel orchestration programs from anywhere without the need to log into their Responsys account. 
 
